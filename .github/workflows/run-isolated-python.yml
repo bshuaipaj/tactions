@@ -1,0 +1,29 @@
+name: python on bare linux
+
+on:
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs:
+  run-isolated:
+    runs-on: ubuntu-latest
+
+    container:
+      image: alpine:latest
+
+    steps:
+      - name: 1
+        run: |
+          apk update
+          apk add --no-cache git python3
+
+      - name: 2
+        uses: actions/checkout@v4
+
+      - name: 3
+        run: |
+          python3 --version
+          python3 -m pip list
+          python3 test.py
+
